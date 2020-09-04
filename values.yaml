@@ -1,0 +1,31 @@
+# Default values for hello-k8s-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+hello:
+  replica: 1
+  image:
+    repo: paulbouwer/hello-kubernetes
+    tag: "1.8"
+  name: hello
+  containerPort: 8080
+  service:
+    name: hello
+    type: ClusterIP
+    port: 80
+    targetPort: 8080
+nginx:
+  replica: 1
+  name: nginx
+  image:
+    # repo: gcr.io/google-samples/hello-frontend
+    # tag: "1.0"
+    repo: nginx
+    tag: latest
+  service:
+    name: nginx
+    type: LoadBalancer
+    port: 80
+    targetPort: 80
+
+# /etc/nginx/conf.d

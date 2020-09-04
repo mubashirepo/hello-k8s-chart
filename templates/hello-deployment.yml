@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.hello.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.hello.name }}
+      tier: backend
+  replicas: {{ .Values.hello.replica }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.hello.name }}
+        tier: backend
+    spec:
+      containers:
+        - name: {{ .Values.hello.name }}
+          image: "{{ .Values.hello.image.repo }}:{{ .Values.hello.image.tag }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.hello.containerPort }}

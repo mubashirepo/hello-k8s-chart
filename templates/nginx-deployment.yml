@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.nginx.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.nginx.name }}
+      tier: frontend
+  replicas: {{ .Values.nginx.replica }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.nginx.name }}
+        tier: frontend
+    spec:
+      containers:
+      - name: {{ .Values.nginx.name }}
+        image: "{{ .Values.nginx.image.repo }}:{{ .Values.nginx.image.tag }}"
+        volumeMounts:
+          - name: {{ .Values.nginx.name }}-config-volume
+            mountPath: /etc/nginx/conf.d
+      volumes:
+        - name: {{ .Values.nginx.name }}-config-volume
+          configMap:
+            name: {{ .Values.nginx.name }}-cm 
